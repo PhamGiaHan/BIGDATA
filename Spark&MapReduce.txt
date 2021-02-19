@@ -1,0 +1,29 @@
+1. Trình bày về Spark.
+Apache Spark là một khung tính toán cụm nhanh được sử dụng để xử lý, truy vấn và phân tích dữ liệu lớn trong thời gian thực. Dựa trên tính toán trong bộ nhớ, nó có lợi thế hơn một số khung dữ liệu lớn khác. Spark cho phép xây dựng các mô hình dự đoán nhanh chóng với việc tính toán được thực hiện trên một nhóm các máy tính, có thể tính toán cùng lúc trên toàn bộ tập dữ liệu mà không cần phải trích xuất mẫu tính toán thử nghiệm. 
+Những tính năng nổi bật:
+•	Tốc độ: Nó nhanh hơn 100 lần so với các khung xử lý dữ liệu quy mô lớn truyền thống.
+•	Bộ nhớ đêm mạnh mẽ: Lớp lập trình đơn giản cung cấp khả năng lưu trữ bộ nhớ cache và ổ đĩa mạnh mẽ.
+•	Triển khai: Có thể được triển khai thông qua Mesos, Hadoop thông qua Sợi hoặc trình quản lý cụm riêng của Spark.
+•	Thời gian thực: Tính toán thời gian thực và độ trễ thấp vì tính toán trong bộ nhớ.
+•	Polygot: Hỗ trợ lập trình trong Scala, Java, Python và R.
+Spark thực hiện đưa các thao tác RDD chuyển đổi vào DAG (Directed Acyclic Graph) và bắt đầu thực hiện. Khi một action được gọi trên RDD, Spark sẽ tạo DAG và chuyển cho DAG scheduler. DAG scheduler chia các thao tác thành các nhóm (stage) khác nhau của các task. Mỗi Stage bao gồm các task dựa trên phân vùng của dữ liệu đầu vào có thể pipline với nhau và có thể thực hiện một cách độc lập trên một máy worker. DAG scheduler sắp xếp các thao tác phù hợp với quá trình thực hiện theo thời gian sao cho tối ưu nhất. Ví dụ: các thao tác map sẽ được đưa vào cùng một stage do không xảy ra shuffle dữ liệu giữa các stage. Kết quả cuối cùng của DAG scheduler là một tập các stage. Các Stages được chuyển cho Task Scheduler. Task Scheduler sẽ chạy các task thông qua cluster manager (Spark Standalone/Yarn/Mesos). Task scheduler không biết về sự phụ thuộc của các stages. Nó chỉ chịu trách nhiệm thực hiện sắp xếp các task một cách tối ưu nhất.
+Mỗi Worker bao gồm một hoặc nhiều Excuter. Các excuter chịu trách nhiệm thực hiện các task trên các luồng riêng biệt. Việc chia nhỏ các task giúp đem lại hiệu năng cao hơn, giảm thiểu ảnh hưởng của dữ liệu không đối xứng (kích thước các file không đồng đều).
+Quá trình Spark xây dựng DAG: Có hai kiểu chuyển đổi có thể áp dụng trên các RDDs đó là chuyển đổi hẹp và chuyển đổi rộng:
+– Chuyển đổi hẹp: không yêu cầu xáo trộn dữ liệu vượt qua các phân vùng
+(partition).Ví dụ như các thao tác map, filter,..
+– Chuyển đổi rộng yêu cầu dữ liệu phải xáo trộn. Ví dụ: reduceByKey,
+sortByKey, groupByKey,…
+
+2. Trình bày về MapReduce.
+MapReduce là một mô hình lập trình, thực hiện quá tình xử lý tập dữ liệu lớn. MapReduce được triển khai trong một số hệ thống, bao gồm triển khai nội bộ của Google và triển khai mã nguồn mở Hadoop phổ biến có thể lấy được, cùng với hệ thống tệp HDFS từ Apache Foundation. 
+MapReduce bao gồm hai pha: map và reduce. Hai pha này được thực hiện liên tiếp nhau. Thủ tục map() sẽ lọc và phân loại dữ liệu, sau đó thủ tục reduce() sẽ tiến hành tổng hợp dữ liệu. Thư viện của map() và reduce() được viết bằng nhiều loại ngôn ngữ khác nhau và được cài đặt miễn phí, phổ biến nhất là Apache Hoop.
+Nhiệm vụ cụ thể của map() và reduce():
+- Các xử lý một cặp (key, value) để sinh ra một cặp (keyI, valueI) - key và value trung gian. Dữ liệu này input vào hàm Reduce.
+- Tiếp nhận các (keyI, valueI), sau đó tiến hành ghép chúng lại dựa trên các valuel có trùng keyl để tạo thành một tập khóa khác nhau. 
+Hoạt động của MapReduce có thể được tóm tắt như sau:
+- Đọc dữ liệu đầu vào.
+- Xử lý dữ liệu đầu vào.
+- Sắp xếp và trộn các kết quả thu được từ các máy tính phân tán thích hợp nhất.
+- Tổng hợp các kết quả trung gian thu được ( thực hiện hàm reduce).
+- Đưa ra kết quả cuối cùng.
+Các máy khi triển khai theo mô hình MapReduce sẽ bao gồm máy master và máy worker. Trong đó máy master làm nhiệm vụ điều phối sự hoạt động của quá trình thực hiện MapReduce trên các máy worker, các máy worker làm nhiệm vụ thực hiện Map và Reduce với dữ liệu mà nó nhận được. Bằng cách đặt trạng thái idle máy workers và sau đó gắn cho từng máy task map hoặc reduce.
