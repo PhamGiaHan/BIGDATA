@@ -1,4 +1,4 @@
-1. Trình bày về Spark.
+1. Trình bày về Spark
 Apache Spark là một khung tính toán cụm nhanh được sử dụng để xử lý, truy vấn và phân tích dữ liệu lớn trong thời gian thực. Dựa trên tính toán trong bộ nhớ, nó có lợi thế hơn một số khung dữ liệu lớn khác. Spark cho phép xây dựng các mô hình dự đoán nhanh chóng với việc tính toán được thực hiện trên một nhóm các máy tính, có thể tính toán cùng lúc trên toàn bộ tập dữ liệu mà không cần phải trích xuất mẫu tính toán thử nghiệm. 
 Những tính năng nổi bật:
 •	Tốc độ: Nó nhanh hơn 100 lần so với các khung xử lý dữ liệu quy mô lớn truyền thống.
@@ -14,7 +14,7 @@ Quá trình Spark xây dựng DAG: Có hai kiểu chuyển đổi có thể áp 
 – Chuyển đổi rộng yêu cầu dữ liệu phải xáo trộn. Ví dụ: reduceByKey,
 sortByKey, groupByKey,…
 
-2. Trình bày về MapReduce.
+2. Trình bày về MapReduce
 MapReduce là một mô hình lập trình, thực hiện quá tình xử lý tập dữ liệu lớn. MapReduce được triển khai trong một số hệ thống, bao gồm triển khai nội bộ của Google và triển khai mã nguồn mở Hadoop phổ biến có thể lấy được, cùng với hệ thống tệp HDFS từ Apache Foundation. 
 MapReduce bao gồm hai pha: map và reduce. Hai pha này được thực hiện liên tiếp nhau. Thủ tục map() sẽ lọc và phân loại dữ liệu, sau đó thủ tục reduce() sẽ tiến hành tổng hợp dữ liệu. Thư viện của map() và reduce() được viết bằng nhiều loại ngôn ngữ khác nhau và được cài đặt miễn phí, phổ biến nhất là Apache Hoop.
 Nhiệm vụ cụ thể của map() và reduce():
